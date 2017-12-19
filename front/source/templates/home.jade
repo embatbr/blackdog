@@ -1,0 +1,13 @@
+extend default
+
+block content
+    form
+        label
+            input(type="radio", name="mode", value="grouped")
+            | Grouped
+            input(type="radio", name="mode", value="stacked")
+            | Stacked
+
+    svg(width="960", height="500")
+
+    script(src="/scripts/d3_stacked_to_grouped_bars.js")

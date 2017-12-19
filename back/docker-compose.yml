@@ -1,0 +1,7 @@
+version: "3.3"
+
+services:
+  zeppelin:
+    image: apache/zeppelin:0.7.3
+    ports:
+      - 8080:8080
