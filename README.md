@@ -13,10 +13,5 @@ If you have no culture, [learn something](https://www.youtube.com/watch?v=yBuub4
 
 ### Links
 
-- [Popular open source JavaScript frameworks for data visualisation](https://sonalake.com/latest/popular-open-source-javascript-frameworks-for-data-visualisation/)
-    - [D3.js with MySQL](http://www.d3noob.org/2013/02/using-mysql-database-as-source-of-data.html)
 - [Dynamic Form in Zeppelin](https://zeppelin.apache.org/docs/latest/manual/dynamicform.html)
 - [RESTful API](https://zeppelin.apache.org/docs/0.7.3/rest-api/)
-- [Data visualization in JS](https://dzone.com/articles/4-useful-javascript-libraries-for-data-analysis-an)
-- [Node + Express on Docker](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
-- [seaborn](https://seaborn.pydata.org/)
