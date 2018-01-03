@@ -5,3 +5,9 @@ services:
     image: apache/zeppelin:0.7.3
     ports:
       - 8080:8080
+    environment:
+      - DW_HOST=${DW_HOST}
+      - DW_PORT=${DW_PORT}
+      - DW_DATABASE=${DW_DATABASE}
+      - DW_USER=${DW_USER}
+      - DW_PASSWORD=${DW_PASSWORD}
