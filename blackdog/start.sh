@@ -9,6 +9,7 @@ DW_CREDENTIALS=$(echo "$1" | base64 --decode)
 
 
 docker ps | grep apache/zeppelin:0.7.3 | grep -v grep | awk '{ print $1 }' | xargs -r docker stop
+docker system prune --all
 
 
 export DW_HOST="$(echo $DW_CREDENTIALS | jq -r '.host')"

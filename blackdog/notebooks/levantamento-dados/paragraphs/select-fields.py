@@ -81,7 +81,7 @@ if selected_date_type == "modified_at":
 
 # Categories (from Diderot)
 
-category_id = z.select("Categoria (Diderot)", categories, "")
+category_id = z.select("Categoria (Diderot)", loaded_tables["categories"], "")
 
 category_filter = ""
 if category_id:
@@ -89,7 +89,7 @@ if category_id:
 
 # Product Types
 
-product_type_id = z.select("Tipo de Produto", product_types, "")
+product_type_id = z.select("Tipo de Produto", loaded_tables["product_types"], "")
 
 product_type_filter = ""
 if product_type_id:
@@ -97,7 +97,7 @@ if product_type_id:
 
 # Problem Types
 
-problem_type_id = z.select("Tipo de Problema", problem_types, "")
+problem_type_id = z.select("Tipo de Problema", loaded_tables["problem_types"], "")
 
 problem_type_filter = ""
 if problem_type_id:
