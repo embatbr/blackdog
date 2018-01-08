@@ -10,7 +10,7 @@ FROM
     raichu_flattened.complains
 WHERE
     {datetime_column} >= '{initial_datetime}'
-    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}{category_filter}{product_type_filter}{problem_type_filter}
+    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}{category_filter}{product_type_filter}{problem_type_filter}{companies_ids_filter}
 LIMIT
     1000) result
 """
@@ -36,6 +36,7 @@ fields = [
     ("state", "Estado"),
     ("region", "Região"),
     ("status", "Status"),
+    ("score", "Nota"),
     ("category_id", "ID da Categoria"),
     ("category_name", "Nome da Categoria"),
     ("score", "Pontuação"),
@@ -103,6 +104,18 @@ problem_type_filter = ""
 if problem_type_id:
     problem_type_filter = "\n    AND problem_type_id = '{}'".format(problem_type_id)
 
+# Company ID filter
+
+companies_ids = z.input("IDs de Empresas (separados por vírgula)")
+companies_ids.strip()
+
+companies_ids_filter = ""
+if companies_ids:
+    companies_ids = companies_ids.split(",")
+    companies_ids = ["'{}'".format(company_id.strip()) for company_id in companies_ids]
+    companies_ids = ', '.join(companies_ids)
+    companies_ids_filter = "\n    AND company_id IN ({})".format(companies_ids)
+
 
 # Query building, fetching and result exhibition
 
@@ -114,7 +127,8 @@ SQL_QUERY = SQL_SKELETON.format(**{
     "evaluated_filter": evaluated_filter,
     "category_filter": category_filter,
     "product_type_filter": product_type_filter,
-    "problem_type_filter": problem_type_filter
+    "problem_type_filter": problem_type_filter,
+    "companies_ids_filter": companies_ids_filter
 })
 
 print SQL_QUERY

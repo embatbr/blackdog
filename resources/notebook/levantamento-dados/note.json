@@ -1,0 +1,118 @@
+{
+    "paragraphs": [
+        {
+            "text": "%md\n## Levantamento de Dados\n##### Execute este parágrafo e os seguintes (Shift-Enter ou pressione o play) para fazer uma consulta.",
+            "user": "anonymous",
+            "config": {
+                "runOnSelectionChange": false,
+                "colWidth": 12.0,
+                "results": [
+                    {
+                        "editorHide": true,
+                        "graph": {
+                            "mode": "table",
+                            "height": 300.0,
+                            "optionOpen": false,
+                            "keys": [],
+                            "values": [],
+                            "groups": [],
+                            "scatter": {}
+                        }
+                    }
+                ],
+                "enabled": true,
+                "editorSetting": {
+                    "language": "markdown",
+                    "editOnDblClick": true
+                },
+                "editorMode": "ace/mode/markdown",
+                "tableHide": false
+            },
+            "settings": {
+                "params": {},
+                "forms": {}
+            },
+            "apps": [],
+            "status": "READY",
+            "progressUpdateIntervalMs": 500
+        },
+        {
+            "text": "",
+            "user": "anonymous",
+            "config": {
+                "runOnSelectionChange": false,
+                "colWidth": 6.0,
+                "results": [
+                    {
+                        "editorHide": true,
+                        "graph": {
+                            "mode": "table",
+                            "height": 300.0,
+                            "optionOpen": false,
+                            "keys": [],
+                            "values": [],
+                            "groups": [],
+                            "scatter": {}
+                        }
+                    }
+                ],
+                "enabled": true,
+                "editorSetting": {
+                    "language": "pyspark",
+                    "editOnDblClick": true
+                },
+                "editorMode": "ace/mode/spark",
+                "tableHide": false
+            },
+            "settings": {
+                "params": {},
+                "forms": {}
+            },
+            "apps": [],
+            "status": "READY",
+            "progressUpdateIntervalMs": 500
+        },
+        {
+            "text": "",
+            "user": "anonymous",
+            "config": {
+                "runOnSelectionChange": false,
+                "colWidth": 12.0,
+                "results": [
+                    {
+                        "editorHide": true,
+                        "graph": {
+                            "mode": "table",
+                            "height": 300.0,
+                            "optionOpen": false,
+                            "keys": [],
+                            "values": [],
+                            "groups": [],
+                            "scatter": {}
+                        }
+                    }
+                ],
+                "enabled": true,
+                "editorSetting": {
+                    "language": "pyspark",
+                    "editOnDblClick": true
+                },
+                "editorMode": "ace/mode/spark",
+                "tableHide": false
+            },
+            "settings": {
+                "params": {},
+                "forms": {}
+            },
+            "apps": [],
+            "status": "READY",
+            "progressUpdateIntervalMs": 500
+        }
+    ],
+    "name": "Levantamento de Dados",
+    "id": "levantamento-dados",
+    "config": {
+        "looknfeel": "default"
+    },
+    "info": {}
+}
