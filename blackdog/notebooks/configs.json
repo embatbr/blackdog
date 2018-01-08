@@ -1,6 +1,23 @@
 [
     {
-        "id": "2D58WU8RV",
-        "name": "levantamento-dados"
+        "name": "levantamento-dados",
+        "layout": {
+            "load-categories": {
+                "position": 0,
+                "width": 4
+            },
+            "load-product_types": {
+                "position": 1,
+                "width": 4
+            },
+            "load-problem_types": {
+                "position": 2,
+                "width": 4
+            },
+            "select-fields": {
+                "position": 3,
+                "width": 12
+            }
+        }
     }
 ]

@@ -10,7 +10,7 @@ FROM
     raichu_flattened.complains
 WHERE
     {datetime_column} >= '{initial_datetime}'
-    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}
+    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}{category_filter}
 LIMIT
     1000) result
 """
@@ -79,6 +79,14 @@ evaluated_filter = ""
 if selected_date_type == "modified_at":
     evaluated_filter = "\n    AND status = 'EVALUATED'"
 
+# Categories (from Diderot)
+
+category_id = z.select("Categoria (Diderot)", categories, "")
+
+category_filter = ""
+if category_id:
+    category_filter = "\n    AND category_id = '{}'".format(category_id)
+
 
 # Query building, fetching and result exhibition
 
@@ -87,7 +95,8 @@ SQL_QUERY = SQL_SKELETON.format(**{
     "datetime_column": selected_date_type,
     "initial_datetime": default_initial_datetime,
     "final_datetime": default_final_datetime,
-    "evaluated_filter": evaluated_filter
+    "evaluated_filter": evaluated_filter,
+    "category_filter": category_filter
 })
 
 print SQL_QUERY
