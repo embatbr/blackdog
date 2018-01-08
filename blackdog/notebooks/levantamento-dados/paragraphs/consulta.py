@@ -1,6 +1,7 @@
 %pyspark
 
 import os
+import pendulum as pdm
 
 
 SQL_SKELETON = """(SELECT
@@ -9,8 +10,13 @@ FROM
     raichu_flattened.complains
 WHERE
     {datetime_column} >= '{initial_datetime}'
-    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}) result
+    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}
+LIMIT
+    1000) result
 """
+
+
+# Fields to select
 
 fields = [
     ("id", "ID"),
@@ -47,17 +53,25 @@ fields = [
     ("created_at", "Data da Reclamação"),
     ("modified_at", "Data da Avaliação")
 ]
-
 selected_fields = ',\n    '.join(z.checkbox("Colunas", fields, ["title"]))
 if not selected_fields:
     raise Exception('Selecione ao menos 1 campo!')
+
+# Initial and final datetime values
+
+default_final_datetime = pdm.utcnow().in_timezone('Brazil/East')
+default_initial_datetime = default_final_datetime.subtract(days=1)
+show_date = lambda dt: dt.strftime('%Y-%m-%d %H:%M:%S')
+default_initial_datetime = z.input("Data Inicial", show_date(default_initial_datetime))
+default_final_datetime = z.input("Data Final", show_date(default_final_datetime))
+
+# Type of datetime
 
 date_type = [
     ("created_at", "Reclamacao"),
     ("modified_at", "Avaliacao")
 ]
-
-selected_date_type = z.select("Data de", date_type, ["created_at"])
+selected_date_type = z.select("Data de", date_type, "created_at")
 if not selected_date_type:
     raise Exception("Selecione um tipo de data!")
 
@@ -65,13 +79,18 @@ evaluated_filter = ""
 if selected_date_type == "modified_at":
     evaluated_filter = "\n    AND status = 'EVALUATED'"
 
+
+# Query building, fetching and result exhibition
+
 SQL_QUERY = SQL_SKELETON.format(**{
     "selected_fields": selected_fields,
     "datetime_column": selected_date_type,
-    "initial_datetime": "2018-01-02 16:00:00",
-    "final_datetime": "2018-01-03 16:00:00",
+    "initial_datetime": default_initial_datetime,
+    "final_datetime": default_final_datetime,
     "evaluated_filter": evaluated_filter
 })
+
+print SQL_QUERY
 
 DW_HOST = os.environ.get("DW_HOST")
 DW_PORT = os.environ.get("DW_PORT")
