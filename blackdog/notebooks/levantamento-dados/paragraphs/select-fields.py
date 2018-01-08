@@ -10,7 +10,7 @@ FROM
     raichu_flattened.complains
 WHERE
     {datetime_column} >= '{initial_datetime}'
-    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}{category_filter}
+    AND {datetime_column} <= '{final_datetime}'{evaluated_filter}{category_filter}{product_type_filter}{problem_type_filter}
 LIMIT
     1000) result
 """
@@ -87,6 +87,22 @@ category_filter = ""
 if category_id:
     category_filter = "\n    AND category_id = '{}'".format(category_id)
 
+# Product Types
+
+product_type_id = z.select("Tipo de Produto", product_types, "")
+
+product_type_filter = ""
+if product_type_id:
+    product_type_filter = "\n    AND product_type_id = '{}'".format(product_type_id)
+
+# Problem Types
+
+problem_type_id = z.select("Tipo de Problema", problem_types, "")
+
+problem_type_filter = ""
+if problem_type_id:
+    problem_type_filter = "\n    AND problem_type_id = '{}'".format(problem_type_id)
+
 
 # Query building, fetching and result exhibition
 
@@ -96,7 +112,9 @@ SQL_QUERY = SQL_SKELETON.format(**{
     "initial_datetime": default_initial_datetime,
     "final_datetime": default_final_datetime,
     "evaluated_filter": evaluated_filter,
-    "category_filter": category_filter
+    "category_filter": category_filter,
+    "product_type_filter": product_type_filter,
+    "problem_type_filter": problem_type_filter
 })
 
 print SQL_QUERY
