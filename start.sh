@@ -10,8 +10,8 @@ AWS_CREDENTIALS=$(echo "$2" | base64 --decode)
 
 
 docker ps | grep apache/zeppelin:0.7.3 | grep -v grep | awk '{ print $1 }' | xargs -r docker stop
-# docker system prune --all
-# docker network prune
+docker system prune --all
+docker network prune
 
 
 export DW_HOST="$(echo $DW_CREDENTIALS | jq -r '.host')"
