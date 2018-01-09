@@ -2,7 +2,7 @@
 
 If you have no culture, [learn something](https://www.youtube.com/watch?v=yBuub4Xe1mw) for God's sake.
 
-[Project proposition](https://docs.google.com/document/d/19eqbVLB9NAxfIj4td5mAcUh4trpPEdoT4iujEzLCu-0)
+[Project proposal](https://docs.google.com/document/d/19eqbVLB9NAxfIj4td5mAcUh4trpPEdoT4iujEzLCu-0)
 
 ## Check
 

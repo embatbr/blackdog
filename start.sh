@@ -45,8 +45,8 @@ docker cp $PROJECT_ROOT_PATH/output/notebook/levantamento-dados/note.json $CONTA
 
 rm -Rf $PROJECT_ROOT_PATH/output
 
-# # docker cp $PROJECT_ROOT_PATH/zeppelin/bin/zeppelin-env.sh $CONTAINER_ID:/zeppelin/bin/zeppelin-env.sh
-# # docker cp $PROJECT_ROOT_PATH/secrets/aws/credentials $CONTAINER_ID:/zeppelin/.aws/credentials
-# # # docker exec $CONTAINER_ID /bin/bash "./bin/zeppelin.sh"
+# docker cp $PROJECT_ROOT_PATH/zeppelin/bin/zeppelin-env.sh $CONTAINER_ID:/zeppelin/bin/zeppelin-env.sh
+# docker cp $PROJECT_ROOT_PATH/secrets/aws/credentials $CONTAINER_ID:/zeppelin/.aws/credentials
+# # docker exec $CONTAINER_ID /bin/bash "./bin/zeppelin.sh"
 
 docker restart $CONTAINER_ID
