@@ -13,7 +13,11 @@ ORDER BY
 """
 
 
-table_names = ["categories", "product_types", "problem_types"]
+table_names = [
+    "categories",
+    "product_types",
+    "problem_types"
+]
 loaded_tables = dict()
 
 
