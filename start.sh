@@ -36,10 +36,10 @@ docker cp $PROJECT_ROOT_PATH/resources/interpreter/spark/dep/postgresql-42.1.4.j
 
 mkdir -p $PROJECT_ROOT_PATH/output/notebook/levantamento-dados
 cp $PROJECT_ROOT_PATH/resources/notebook/levantamento-dados/note.json $PROJECT_ROOT_PATH/output/notebook/levantamento-dados/note.json
-python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "env-vars-loads.py"
-python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "enum-loads.py"
-python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "table-loads.py"
-python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "query.py"
+python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "global-loads"
+python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "table-loads"
+python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "enum-loads"
+python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "query"
 
 docker exec $CONTAINER_ID rm -Rf /zeppelin/notebook
 docker exec $CONTAINER_ID mkdir -p /zeppelin/notebook/levantamento-dados

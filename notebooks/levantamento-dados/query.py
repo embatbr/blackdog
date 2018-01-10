@@ -1,16 +1,14 @@
 %pyspark
 
-import os
 import pendulum as pdm
 
 
-SQL_SKELETON = """(SELECT
+SQL_SKELETON = """SELECT
     {selected_fields_filter}
 FROM
     raichu_flattened.complains{where}
 LIMIT
-    1000) result
-"""
+    1000"""
 
 
 # Fields to select
@@ -81,7 +79,7 @@ date_type = [
     ("created_at", "Reclamacao"),
     ("modified_at", "Avaliacao")
 ]
-datetime_column = z.select("Data de", date_type, "created_at")
+datetime_column = z.select("Filtrar por data de", date_type, "created_at")
 if not datetime_column:
     raise Exception("Selecione um tipo de data!")
 
@@ -142,9 +140,9 @@ if complains_ids:
     complains_ids = ', '.join(complains_ids)
     complains_ids_filter = "id IN ({})".format(complains_ids)
 
-# Filter by word (mock)
+# Filter by word
 
-comma_separated_words = z.input("Filtro de palavras no Título ou no Texto")
+comma_separated_words = z.input("Filtro de palavras no Título ou no Texto (por enquanto é de mentira")
 comma_separated_words
 
 comma_separated_words_filter = ""
@@ -172,28 +170,12 @@ if where_filters:
 
 # Query building, fetching and result exhibition
 
-SQL_QUERY = SQL_SKELETON.format(**{
+sql_query = SQL_SKELETON.format(**{
     "selected_fields_filter": selected_fields_filter,
     "where": where
 })
 
-# print SQL_QUERY
+print sql_query
 
-DW_HOST = os.environ.get("DW_HOST")
-DW_PORT = os.environ.get("DW_PORT")
-DW_DATABASE = os.environ.get("DW_DATABASE")
-DW_USER = os.environ.get("DW_USER")
-DW_PASSWORD = os.environ.get("DW_PASSWORD")
-
-result = sqlContext.read.format('jdbc').options(
-    url='jdbc:postgresql://{DW_HOST}:{DW_PORT}/{DW_DATABASE}?user={DW_USER}&password={DW_PASSWORD}'.format(**{
-        "DW_HOST": DW_HOST,
-        "DW_PORT": DW_PORT,
-        "DW_DATABASE": DW_DATABASE,
-        "DW_USER": DW_USER,
-        "DW_PASSWORD": DW_PASSWORD
-    }),
-    dbtable=SQL_QUERY
-).load()
-
+result = execute_query(sql_query)
 z.show(result)
