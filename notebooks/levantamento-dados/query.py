@@ -142,6 +142,13 @@ if complains_ids:
     complains_ids = ', '.join(complains_ids)
     complains_ids_filter = "id IN ({})".format(complains_ids)
 
+# Filter by word (mock)
+
+comma_separated_words = z.input("Filtro de palavras no Título ou no Texto")
+comma_separated_words
+
+comma_separated_words_filter = ""
+
 
 # Joining all filters
 
@@ -153,7 +160,8 @@ where_filters = [
     product_type_filter,
     problem_type_filter,
     companies_ids_filter,
-    complains_ids_filter
+    complains_ids_filter,
+    comma_separated_words_filter
 ]
 where_filters = [where_filter for where_filter in where_filters if where_filter]
 

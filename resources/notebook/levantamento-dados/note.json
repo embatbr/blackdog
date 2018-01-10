@@ -41,7 +41,79 @@
             "user": "anonymous",
             "config": {
                 "runOnSelectionChange": false,
-                "colWidth": 6.0,
+                "colWidth": 4.0,
+                "results": [
+                    {
+                        "editorHide": false,
+                        "graph": {
+                            "mode": "table",
+                            "height": 300.0,
+                            "optionOpen": false,
+                            "keys": [],
+                            "values": [],
+                            "groups": [],
+                            "scatter": {}
+                        }
+                    }
+                ],
+                "enabled": true,
+                "editorSetting": {
+                    "language": "python",
+                    "editOnDblClick": true
+                },
+                "editorMode": "ace/mode/python",
+                "tableHide": false
+            },
+            "settings": {
+                "params": {},
+                "forms": {}
+            },
+            "apps": [],
+            "status": "READY",
+            "progressUpdateIntervalMs": 500
+        },
+        {
+            "text": "I'm not putting my lips on that",
+            "user": "anonymous",
+            "config": {
+                "runOnSelectionChange": false,
+                "colWidth": 4.0,
+                "results": [
+                    {
+                        "editorHide": false,
+                        "graph": {
+                            "mode": "table",
+                            "height": 300.0,
+                            "optionOpen": false,
+                            "keys": [],
+                            "values": [],
+                            "groups": [],
+                            "scatter": {}
+                        }
+                    }
+                ],
+                "enabled": true,
+                "editorSetting": {
+                    "language": "python",
+                    "editOnDblClick": true
+                },
+                "editorMode": "ace/mode/python",
+                "tableHide": false
+            },
+            "settings": {
+                "params": {},
+                "forms": {}
+            },
+            "apps": [],
+            "status": "READY",
+            "progressUpdateIntervalMs": 500
+        },
+        {
+            "text": "I'm not putting my lips on that",
+            "user": "anonymous",
+            "config": {
+                "runOnSelectionChange": false,
+                "colWidth": 4.0,
                 "results": [
                     {
                         "editorHide": false,

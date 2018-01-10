@@ -10,8 +10,8 @@ AWS_CREDENTIALS=$(echo "$2" | base64 --decode)
 
 
 docker ps | grep apache/zeppelin:0.7.3 | grep -v grep | awk '{ print $1 }' | xargs -r docker stop
-docker system prune --all
-docker network prune
+# docker system prune --all
+# docker network prune
 
 
 export DW_HOST="$(echo $DW_CREDENTIALS | jq -r '.host')"
@@ -36,6 +36,8 @@ docker cp $PROJECT_ROOT_PATH/resources/interpreter/spark/dep/postgresql-42.1.4.j
 
 mkdir -p $PROJECT_ROOT_PATH/output/notebook/levantamento-dados
 cp $PROJECT_ROOT_PATH/resources/notebook/levantamento-dados/note.json $PROJECT_ROOT_PATH/output/notebook/levantamento-dados/note.json
+python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "env-vars-loads.py"
+python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "enum-loads.py"
 python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "table-loads.py"
 python3 $PROJECT_ROOT_PATH/deploy/create_notebook.py "levantamento-dados" "query.py"
 

@@ -14,8 +14,10 @@ PARAGRAPH_PREFIX = '{}/notebooks'.format(PROJECT_ROOT_PATH)
 OUTPUT_PREFIX = '{}/output/notebook'.format(PROJECT_ROOT_PATH)
 
 indices = {
-    'table-loads.py': 1,
-    'query.py': 2
+    'env-vars-loads.py': 1,
+    'enum-loads.py': 2,
+    'table-loads.py': 3,
+    'query.py': 4
 }
 
 
