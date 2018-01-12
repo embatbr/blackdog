@@ -1,7 +1,7 @@
 {
     "paragraphs": [
         {
-            "text": "%md\n## Levantamento de Dados\n##### Execute este parágrafo e os seguintes (Shift-Enter ou pressione o play) para fazer uma consulta.",
+            "text": "%md\n## Levantamento de Dados\n##### Execute este parágrafo e os seguintes (Shift-Enter ou pressione o PLAY no canto superior direito) para fazer uma consulta.",
             "user": "anonymous",
             "config": {
                 "runOnSelectionChange": false,

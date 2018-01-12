@@ -1,25 +1,43 @@
 %pyspark
 
 
-SQL_SKELETON = """SELECT
-    t.typname AS enum_name,
-    e.enumlabel AS enum_value
-FROM
-    pg_type t
-JOIN
-    pg_enum e
-    ON
-        t.oid = e.enumtypid
-JOIN
-    pg_catalog.pg_namespace n
-    ON
-        n.nspname = 'public'
-        AND n.oid = t.typnamespace
-WHERE
-    t.typname IN ('brazillian_regions', 'brazillian_states')
-GROUP BY
-    enum_name,
-    enum_value
-ORDER BY
-    enum_name,
-    enum_value"""
+enums = {
+    "brazillian_regions": [
+        ("", ""),
+        ("CW", "Centro-Oeste"),
+        ("NE", "Nordeste"),
+        ("N", "Norte"),
+        ("SE", "Sudeste"),
+        ("S", "Sul")
+    ],
+    "brazillian_states": [
+        ("", ""),
+        ("AC", "Acre"),
+        ("AL", "Alagoas"),
+        ("AP", "Amapá"),
+        ("AM", "Amazonas"),
+        ("BA", "Bahia"),
+        ("CE", "Ceará"),
+        ("DF", "Distrito Federal"),
+        ("ES", "Espírito Santo"),
+        ("GO", "Goiás"),
+        ("MA", "Maranhão"),
+        ("MT", "Mato Grosso"),
+        ("MS", "Mato Grosso do Sul"),
+        ("MG", "Minas Gerais"),
+        ("PA", "Pará"),
+        ("PB", "Paraíba"),
+        ("PR", "Paraná"),
+        ("PE", "Pernambuco"),
+        ("PI", "Piauí"),
+        ("RJ", "Rio de Janeiro"),
+        ("RN", "Rio Grande do Norte"),
+        ("RS", "Rio Grande do Sul"),
+        ("RO", "Rondônia"),
+        ("RR", "Roraima"),
+        ("SC", "Santa Catarina"),
+        ("SP", "São Paulo"),
+        ("SE", "Sergipe"),
+        ("TO", "Tocantins")
+    ]
+}

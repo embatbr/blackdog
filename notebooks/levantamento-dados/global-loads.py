@@ -1,6 +1,10 @@
 %pyspark
 
 import os
+# import sys
+
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 
 DW_HOST = os.environ.get("DW_HOST")

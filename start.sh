@@ -5,13 +5,16 @@ export PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd $PROJECT_ROOT_PATH
 
 
-DW_CREDENTIALS=$(echo "$1" | base64 --decode)
-AWS_CREDENTIALS=$(echo "$2" | base64 --decode)
+PRUNE="$1"
+DW_CREDENTIALS=$(echo "$2" | base64 --decode)
+AWS_CREDENTIALS=$(echo "$3" | base64 --decode)
 
 
 docker ps | grep apache/zeppelin:0.7.3 | grep -v grep | awk '{ print $1 }' | xargs -r docker stop
-# docker system prune --all
-# docker network prune
+if [ "$PRUNE" == "prune" ]; then
+    docker system prune --all
+    docker network prune
+fi
 
 
 export DW_HOST="$(echo $DW_CREDENTIALS | jq -r '.host')"

@@ -20,7 +20,7 @@ paragraphs = {
         'filename': 'global-loads.py'
     },
     'table-loads': {
-        'title': 'Carregar tabelas',
+        'title': 'Carregar tabelas auxiliares',
         'index': 2,
         'filename': 'table-loads.py'
     },
