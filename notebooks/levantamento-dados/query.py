@@ -6,7 +6,7 @@ import pendulum as pdm
 SQL_SKELETON = """SELECT
     {selected_fields_filter}
 FROM
-    raichu_flattened.complains{where}
+    raichu_flattened.complains{where}{group_by_statement}{order_by_statement}
 LIMIT
     1000"""
 
@@ -160,7 +160,7 @@ deleted_filter = ""
 if deleted:
     deleted_filter = "deleted = '%s'" % deleted
 
-# Counts
+# Counting
 
 count_by_options = [
     ("", ""),
@@ -168,6 +168,23 @@ count_by_options = [
     ("DISTINCT user_id", "Consumidor")
 ]
 count_by = z.select("Contar por", count_by_options, count_by_options[0][0])
+
+# Grouping
+
+group_options = [
+    (False, "Não"),
+    (True, "Sim")
+]
+group = z.select("Agrupar (por campos selecionados)", group_options, group_options[0][0])
+
+# Ordering
+
+order_by = z.input("Ordenar (separe os campos por vírgula e use 'DESC' após o campo para inverter sua ordem)").strip()
+
+order_by_statement = ""
+if order_by:
+    order_by = list(map(lambda x: x.strip(), order_by.split(',')))
+    order_by_statement = '\nORDER BY\n    %s' % '\n    '.join(order_by)
 
 # Fields to select
 
@@ -206,18 +223,28 @@ fields = [
     ("31_gambi_created_at", "Data da Reclamação"),
     ("32_gambi_modified_at", "Data da Avaliação")
 ]
-selected_fields = z.checkbox("Colunas", fields, ["01_gambi_title"])
-if not selected_fields:
-    selected_fields = [fields[1][0]]
+selected_fields = z.checkbox("Colunas (obs: a ordem da seleção muda)", fields, ["01_gambi_title"])
+# if not selected_fields:
+#     selected_fields = [fields[1][0]]
 
-selected_fields = sorted(selected_fields)
+# selected_fields = sorted(selected_fields)
 selected_fields = [selected_field.split('_gambi_')[1] for selected_field in selected_fields]
+
+# Checking group
+
+group_by_statement = ""
+if (group or count_by) and selected_fields:
+    selected_fields_filter = ',\n    '.join(selected_fields)
+    group_by_statement = "\nGROUP BY\n    %s" % selected_fields_filter
+
+# Adding count in selected fields
 
 selected_fields_filter = ''
 if count_by:
-    selected_fields_filter = "count(%s)" % count_by
-else:
-    selected_fields_filter = ',\n    '.join(selected_fields)
+    count_name = '%s_count' % '_'.join(selected_fields)
+    selected_fields.append("count(%s) AS %s" % (count_by, count_name))
+
+selected_fields_filter = ',\n    '.join(selected_fields)
 
 
 # Joining all filters
@@ -251,7 +278,9 @@ if where_filters:
 
 sql_query = SQL_SKELETON.format(**{
     "selected_fields_filter": selected_fields_filter,
-    "where": where
+    "where": where,
+    "group_by_statement": group_by_statement,
+    "order_by_statement": order_by_statement
 })
 
 print "Query:"
