@@ -260,10 +260,13 @@ if (group or count_by) and selected_fields:
     group_by_statement = "\nGROUP BY\n    %s" % selected_fields_filter
 
     if (having_count_gte != "") or (having_count_lte != ""):
-        having_count_gte = "count(%s) >= %s" % (count_by, having_count_gte)
-        having_count_lte = "count(%s) <= %s" % (count_by, having_count_lte)
+        having_list = list()
+        if having_count_gte != "":
+            having_list.append("count(%s) >= %s" % (count_by, having_count_gte))
+        if having_count_lte != "":
+            having_list.append("count(%s) <= %s" % (count_by, having_count_lte))
 
-        having_statement = "HAVING\n        %s" % "\n        AND ".join([having_count_gte, having_count_lte])
+        having_statement = "HAVING\n        %s" % "\n        AND ".join(having_list)
         group_by_statement = "%s\n    %s" % (group_by_statement, having_statement)
 
 # Adding count in selected fields
