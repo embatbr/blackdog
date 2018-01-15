@@ -8,7 +8,7 @@ SQL_SKELETON = """SELECT
 FROM
     raichu_flattened.complains{where}{group_by_statement}{order_by_statement}
 LIMIT
-    1000"""
+    {limit}"""
 
 
 # Initial and final datetime values
@@ -186,6 +186,20 @@ if order_by:
     order_by = list(map(lambda x: x.strip(), order_by.split(',')))
     order_by_statement = '\nORDER BY\n    %s' % '\n    '.join(order_by)
 
+# Limit
+
+limit = z.input("Limite (de 1 a 1000)").strip()
+
+if not limit:
+    limit = "1000"
+
+limit = int(limit)
+
+if limit < 1:
+    limit = 1
+elif limit > 1000:
+    limit = 1000
+
 # Fields to select
 
 fields = [
@@ -224,10 +238,6 @@ fields = [
     ("32_gambi_modified_at", "Data da Avaliação")
 ]
 selected_fields = z.checkbox("Colunas (obs: a ordem da seleção muda)", fields, ["01_gambi_title"])
-# if not selected_fields:
-#     selected_fields = [fields[1][0]]
-
-# selected_fields = sorted(selected_fields)
 selected_fields = [selected_field.split('_gambi_')[1] for selected_field in selected_fields]
 
 # Checking group
@@ -241,8 +251,7 @@ if (group or count_by) and selected_fields:
 
 selected_fields_filter = ''
 if count_by:
-    count_name = '%s_count' % '_'.join(selected_fields)
-    selected_fields.append("count(%s) AS %s" % (count_by, count_name))
+    selected_fields.append("count(%s) AS _count" % count_by)
 
 selected_fields_filter = ',\n    '.join(selected_fields)
 
@@ -280,7 +289,8 @@ sql_query = SQL_SKELETON.format(**{
     "selected_fields_filter": selected_fields_filter,
     "where": where,
     "group_by_statement": group_by_statement,
-    "order_by_statement": order_by_statement
+    "order_by_statement": order_by_statement,
+    "limit": limit
 })
 
 print "Query:"
