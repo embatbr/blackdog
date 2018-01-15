@@ -34,8 +34,6 @@ date_type = [
     ("modified_at", "Avaliacao")
 ]
 datetime_column = z.select("Filtrar por data de", date_type, "created_at")
-if not datetime_column:
-    raise Exception("Selecione um tipo de data!")
 
 evaluated_filter = ""
 if datetime_column == "modified_at":
@@ -72,7 +70,7 @@ if problem_type_id:
 
 # Company ID filter
 
-companies_ids = z.input("IDs de Empresas (separados por vírgula ou manter em branco)").strip()
+companies_ids = z.input("IDs de Empresas (separados por vírgula)").strip()
 
 companies_ids_filter = ""
 if companies_ids:
@@ -83,7 +81,7 @@ if companies_ids:
 
 # Complain ID filter
 
-complains_ids = z.input("IDs de Reclamações (separados por vírgula ou manter em branco)").strip()
+complains_ids = z.input("IDs de Reclamações (separados por vírgula)").strip()
 
 complains_ids_filter = ""
 if complains_ids:
@@ -94,7 +92,7 @@ if complains_ids:
 
 # Filter by word
 
-comma_separated_words = z.input("[not working] Filtro de palavras no Título ou no Texto (I'm not putting my lips on that)").strip()
+comma_separated_words = z.input("[not working] Filtro de palavras no Título ou no Texto").strip()
 
 comma_separated_words_filter = ""
 
@@ -116,7 +114,7 @@ if state:
 
 # Filter by city
 
-city = z.input("[not working] Cidade (I'm not putting my lips on that)").strip()
+city = z.input("[not working] Cidade").strip()
 
 city_filter = ""
 # if city:
@@ -151,10 +149,10 @@ if origins:
 
 deleted_or_not = [
     ("", "Todas"),
-    ("f", "Ativa"),
-    ("t", "Inativa")
+    ("f", "Ativas"),
+    ("t", "Inativas")
 ]
-deleted = z.select("Filtrar por atividade (campo 'deleted')", deleted_or_not, deleted_or_not[0][0])
+deleted = z.select("Filtrar por reclamações", deleted_or_not, deleted_or_not[0][0])
 
 deleted_filter = ""
 if deleted:
@@ -175,11 +173,25 @@ group_options = [
     (False, "Não"),
     (True, "Sim")
 ]
-group = z.select("Agrupar (por campos selecionados)", group_options, group_options[0][0])
+group = z.select("Agrupar (por colunas selecionados)", group_options, group_options[0][0])
+
+# GROUP BY filters (HAVING) when using count
+
+having_count_gte = z.input("Limite inferior da contagem agrupada").strip()
+if having_count_gte:
+    having_count_gte = int(having_count_gte)
+    if having_count_gte < 0:
+        having_count_gte = 0
+
+having_count_lte = z.input("Limite superior da contagem agrupada").strip()
+if having_count_lte:
+    having_count_lte = int(having_count_lte)
+    if having_count_lte < 0:
+        having_count_lte = 0
 
 # Ordering
 
-order_by = z.input("Ordenar (separe os campos por vírgula e use 'DESC' após o campo para inverter sua ordem)").strip()
+order_by = z.input("Ordenar (separe os colunas por vírgula e use 'DESC' após o coluna para inverter sua ordem)").strip()
 
 order_by_statement = ""
 if order_by:
@@ -237,7 +249,7 @@ fields = [
     ("31_gambi_created_at", "Data da Reclamação"),
     ("32_gambi_modified_at", "Data da Avaliação")
 ]
-selected_fields = z.checkbox("Colunas (obs: a ordem da seleção muda)", fields, ["01_gambi_title"])
+selected_fields = z.checkbox("Colunas (obs: a ordem da NÃO se mantém)", fields, ["01_gambi_title"])
 selected_fields = [selected_field.split('_gambi_')[1] for selected_field in selected_fields]
 
 # Checking group
@@ -246,6 +258,13 @@ group_by_statement = ""
 if (group or count_by) and selected_fields:
     selected_fields_filter = ',\n    '.join(selected_fields)
     group_by_statement = "\nGROUP BY\n    %s" % selected_fields_filter
+
+    if (having_count_gte != "") or (having_count_lte != ""):
+        having_count_gte = "count(%s) >= %s" % (count_by, having_count_gte)
+        having_count_lte = "count(%s) <= %s" % (count_by, having_count_lte)
+
+        having_statement = "HAVING\n        %s" % "\n        AND ".join([having_count_gte, having_count_lte])
+        group_by_statement = "%s\n    %s" % (group_by_statement, having_statement)
 
 # Adding count in selected fields
 
