@@ -52,6 +52,7 @@ text = file.read()
 
 
 notebook_conf["paragraphs"][paragraph['index']]["title"] = paragraph['title']
+notebook_conf["paragraphs"][paragraph['index']]["id"] = paragraph_name
 notebook_conf["paragraphs"][paragraph['index']]["text"] = text
 
 
